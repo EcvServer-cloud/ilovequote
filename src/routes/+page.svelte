@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>iLoveQuote — Crea cotizaciones profesionales en minutos</title>
+	<title>Yo❤️Cotizar — Crea cotizaciones profesionales en minutos</title>
 </svelte:head>
 
 {#if $draftChecked && $draftAvailable}
