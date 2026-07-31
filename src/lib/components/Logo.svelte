@@ -10,7 +10,7 @@
 </script>
 
 <span class="inline-flex select-none items-center font-display font-extrabold tracking-tight {sizes[size]}">
-	<span class="text-ink">i</span>
+	<span class="text-ink">YO</span>
 	<span
 		class="mx-0.5 text-heart {animated ? 'animate-heartbeat' : ''}"
 		style="display:inline-block; transform-origin:center;"
@@ -18,5 +18,5 @@
 	>
 		❤
 	</span>
-	<span class="text-ink">Quote</span>
+	<span class="text-ink">COTIZAR</span>
 </span>
