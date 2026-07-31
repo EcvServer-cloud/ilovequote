@@ -242,7 +242,7 @@ export async function buildQuotePdf(state) {
 		doc.setFont('helvetica', 'normal');
 		doc.setFontSize(8);
 		doc.setTextColor('#B3B3B6');
-		doc.text('Creado con i❤️Quote', pageWidth / 2, pageHeight - 24, { align: 'center' });
+		doc.text('Creado con YoAmoCotizar', pageWidth / 2, pageHeight - 24, { align: 'center' });
 	}
 
 	const blob = doc.output('blob');
