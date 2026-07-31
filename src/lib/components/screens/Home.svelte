@@ -19,7 +19,7 @@
 		</button>
 
 		<p class="mx-auto mt-8 max-w-xs text-xs leading-relaxed text-muted/80 sm:max-w-sm">
-			🔒 Tus datos permanecen en tu dispositivo. iLoveQuote no almacena tus cotizaciones.
+			🔒 Tus datos permanecen en tu dispositivo. YO❤️COTIZAR no almacena tus cotizaciones.
 		</p>
 	</div>
 </div>
