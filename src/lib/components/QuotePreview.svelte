@@ -87,5 +87,5 @@
 		<p class="mt-3 border-t border-border pt-3 text-xs italic text-muted">{meta.notes}</p>
 	{/if}
 
-	<p class="mt-4 text-center text-[10px] text-border">Creado con i❤️Quote</p>
+	<p class="mt-4 text-center text-[10px] text-border">Creado con YoAmoCotizar.com</p>
 </div>
