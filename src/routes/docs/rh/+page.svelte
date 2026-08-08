@@ -6,7 +6,7 @@
 
 	const documentos = [
 		{
-			title: 'Recibo de nómina',
+			title: 'Comprobante de pago',
 			description: 'Percepciones, deducciones y neto a pagar.',
 			href: `${base}/docs/rh/recibo-nomina`,
 			disabled: false
