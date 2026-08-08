@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-	<title>Recibo de nómina — Documentos</title>
+	<title>Comprobante de pago — Documentos</title>
 </svelte:head>
 
 {#if $draftChecked && $draftAvailable}
