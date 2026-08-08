@@ -5,6 +5,7 @@
 export const INK = '#111111';
 export const MUTED = '#6B7280';
 export const HEART = '#E11D2E';
+export const HEART_RGB = [225, 29, 46]; // same as HEART, as an RGB triplet for autoTable fillColor
 export const BORDER = '#E7E7EA';
 
 export async function createDoc() {
@@ -16,9 +17,16 @@ export function formatDate(date = new Date()) {
 	return new Intl.DateTimeFormat('es-MX', { day: '2-digit', month: 'long', year: 'numeric' }).format(date);
 }
 
+export function formatTime(date = new Date()) {
+	return new Intl.DateTimeFormat('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(date);
+}
+
 /**
  * Draws a standard header: logo (optional) on the left, entity name + contact
  * lines right-aligned. Returns the Y position to continue drawing from.
+ * (Kept for simpler documents. Comprobante de pago uses its own custom
+ * banded header — see rh/recibo-nomina/template.js — but this stays available
+ * for future, simpler documents.)
  */
 export function drawHeader(doc, { logo, name, contactLines = [], marginX = 48, startY = 56 }) {
 	const pageWidth = doc.internal.pageSize.getWidth();
@@ -74,23 +82,55 @@ export function drawLine(doc, label, value, { marginX = 48, y, muted = true }) {
 	return y + 13;
 }
 
-/** Wraps jspdf-autotable with the shared visual style. Returns finalY. */
-export function drawTable(doc, { startY, head, body, marginX = 48, columnStyles = {} }) {
+/**
+ * Solid color bar with centered/left/right text — used for the pink section
+ * bars ("PERCEPCIONES", "Forma de pago: ...", "IMPORTE CON LETRA", etc).
+ * Returns the Y position right below the bar.
+ */
+export function drawBar(doc, { x, y, width, height = 20, text, align = 'center', bg = HEART, color = '#FFFFFF', fontSize = 9, bold = true }) {
+	doc.setFillColor(bg);
+	doc.rect(x, y, width, height, 'F');
+	doc.setFont('helvetica', bold ? 'bold' : 'normal');
+	doc.setFontSize(fontSize);
+	doc.setTextColor(color);
+	const textY = y + height / 2 + fontSize * 0.35;
+	if (align === 'left') {
+		doc.text(text, x + 8, textY);
+	} else if (align === 'right') {
+		doc.text(text, x + width - 8, textY, { align: 'right' });
+	} else {
+		doc.text(text, x + width / 2, textY, { align: 'center' });
+	}
+	return y + height;
+}
+
+/**
+ * Wraps jspdf-autotable with the shared visual style (brand-pink header row).
+ * Pass `x`/`width` to constrain the table to part of the page — used to put
+ * two tables side by side (e.g. Percepciones | Deducciones).
+ * Returns finalY.
+ */
+export function drawTable(doc, { startY, head, body, marginX = 48, x, width, columnStyles = {} }) {
+	const pageWidth = doc.internal.pageSize.getWidth();
+	const left = x ?? marginX;
+	const right = width != null ? pageWidth - left - width : marginX;
+
 	doc.autoTable({
 		startY,
-		margin: { left: marginX, right: marginX },
+		margin: { left, right },
+		tableWidth: width ?? 'auto',
 		head: [head],
 		body,
-		styles: { font: 'helvetica', fontSize: 9.5, textColor: INK, cellPadding: 8 },
-		headStyles: { fillColor: [17, 17, 17], textColor: [255, 255, 255], fontStyle: 'bold' },
-		alternateRowStyles: { fillColor: [247, 247, 248] },
+		styles: { font: 'helvetica', fontSize: 8.5, textColor: INK, cellPadding: 5 },
+		headStyles: { fillColor: HEART_RGB, textColor: [255, 255, 255], fontStyle: 'bold' },
+		alternateRowStyles: { fillColor: [250, 245, 246] },
 		columnStyles
 	});
 	return doc.lastAutoTable.finalY;
 }
 
-/** Brand footer on every page, matching cotización's "Creado con i❤️Quote". */
-export function drawBrandFooter(doc) {
+/** Brand footer on every page. */
+export function drawBrandFooter(doc, { text = 'Hecho con YoAmoCotizar.com' } = {}) {
 	const pageWidth = doc.internal.pageSize.getWidth();
 	const pageCount = doc.internal.getNumberOfPages();
 	for (let p = 1; p <= pageCount; p++) {
@@ -98,8 +138,8 @@ export function drawBrandFooter(doc) {
 		const pageHeight = doc.internal.pageSize.getHeight();
 		doc.setFont('helvetica', 'normal');
 		doc.setFontSize(8);
-		doc.setTextColor('#B3B3B6');
-		doc.text('Creado con i❤️Quote', pageWidth / 2, pageHeight - 24, { align: 'center' });
+		doc.setTextColor(HEART);
+		doc.text(text, pageWidth / 2, pageHeight - 24, { align: 'center' });
 	}
 }
 

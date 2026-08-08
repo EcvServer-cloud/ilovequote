@@ -36,6 +36,7 @@ export function makePeriodo(overrides = {}) {
 		fechaFin: '',
 		fechaPago: '',
 		periodicidad: '', // 'semanal' | 'quincenal' | 'mensual' | ...
+		ejercicio: '', // año fiscal, ej. "2026"
 		...overrides
 	};
 }
