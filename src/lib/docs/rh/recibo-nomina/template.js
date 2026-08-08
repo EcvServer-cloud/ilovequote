@@ -287,7 +287,7 @@ export async function buildNominaPdf(state) {
 	doc.setFontSize(7.5);
 	doc.setTextColor(MUTED);
 	const legal = doc.splitTextToSize(
-		'Este recibo ampara el pago de las percepciones y deducciones señaladas, correspondientes al periodo laboral indicado.',
+		'Este documento constituye una constancia interna del pago realizado, de acuerdo con los conceptos y datos aquí señalados, y no sustituye el comprobante fiscal correspondiente.',
 		contentWidth
 	);
 	doc.text(legal, marginX, y);
