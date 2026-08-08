@@ -1,6 +1,9 @@
 import { createDocFlow } from '$lib/docs/engine/createDocFlow.js';
 import { makeEmpresa, makePersona, makePeriodo, makeConcepto } from '$lib/docs/shared/schema.js';
 
+// Internamente seguimos llamando a la carpeta/ruta "recibo-nomina" (ver
+// NOTES.md), pero el documento ahora se presenta al usuario como
+// "Comprobante de pago".
 export const STEPS = [
 	'patron',
 	'trabajador',
@@ -19,19 +22,23 @@ function emptyState() {
 		patron: makeEmpresa(),
 		trabajador: makePersona(),
 		periodo: makePeriodo(),
-		percepciones: [makeConcepto({ tipo: 'salario', nombre: 'Salario' })],
-		deducciones: [makeConcepto({ tipo: 'otros', nombre: '' })],
+		percepciones: [makeConcepto({ tipo: 'percepcion', nombre: 'Salario' })],
+		deducciones: [makeConcepto({ tipo: 'deduccion', nombre: '' })],
+		retenciones: 0, // monto único, aparte de la tabla de deducciones
 		formaPago: '',
+		notas: '',
 		firmas: { incluir: true },
 		folio: '',
 		generatedAt: null
 	};
 }
 
-// A single flow instance is enough — this app has no accounts, so there's
-// only ever one "current" recibo de nómina in progress per browser.
+// Nota: cambiamos el id a 'comprobante-pago' (antes 'recibo-nomina'), lo que
+// mueve la clave de borrador en localStorage a docs:draft:comprobante-pago.
+// Cualquier borrador viejo bajo el id anterior simplemente queda huérfano —
+// no rompe nada, solo ya no se recupera (aceptable, la función es nueva).
 export const nominaFlow = createDocFlow({
-	id: 'recibo-nomina',
+	id: 'comprobante-pago',
 	steps: STEPS,
 	emptyState
 });
