@@ -6,7 +6,10 @@
 
 	const opciones = ['Transferencia', 'Efectivo', 'Cheque', 'Depósito', 'Otro'];
 
-	$: neto = sumConceptos($nominaFlow.percepciones) - sumConceptos($nominaFlow.deducciones);
+	$: neto =
+		sumConceptos($nominaFlow.percepciones) -
+		sumConceptos($nominaFlow.deducciones) -
+		(Number($nominaFlow.retenciones) || 0);
 </script>
 
 <StepShell
@@ -31,5 +34,9 @@
 				<span class="text-sm font-medium text-ink">{op}</span>
 			</label>
 		{/each}
+	</div>
+
+	<div class="mt-5">
+		<Input label="Notas" type="textarea" bind:value={$nominaFlow.notas} placeholder="Opcional" />
 	</div>
 </StepShell>

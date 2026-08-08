@@ -22,6 +22,7 @@
 			<Input label="Fecha fin" type="date" bind:value={$nominaFlow.periodo.fechaFin} />
 		</div>
 		<Input label="Fecha de pago" type="date" bind:value={$nominaFlow.periodo.fechaPago} />
+		<Input label="Ejercicio (año)" bind:value={$nominaFlow.periodo.ejercicio} placeholder="Ej. 2026" />
 		<div>
 			<label class="field-label" for="periodicidad">Periodicidad</label>
 			<select id="periodicidad" class="field-input" bind:value={$nominaFlow.periodo.periodicidad}>

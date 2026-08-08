@@ -7,7 +7,8 @@
 	function generate() {
 		nominaFlow.update((s) => ({
 			...s,
-			folio: generateNominaFolio(s.patron.nombre, new Date()),
+			// El folio ahora se arma con el RFC del trabajador (no del patrón).
+			folio: generateNominaFolio(s.trabajador, new Date()),
 			generatedAt: new Date().toISOString(),
 			screen: 'generado'
 		}));
@@ -19,9 +20,9 @@
 	progressSteps={STEPS.slice(0, -1)}
 	current={$nominaFlow.screen}
 	title="Vista previa"
-	subtitle="Así se verá tu recibo de nómina."
+	subtitle="Así se verá tu comprobante de pago."
 	canContinue={true}
-	continueLabel="Generar recibo"
+	continueLabel="Generar comprobante"
 	onContinue={generate}
 	onBack={() => nominaFlow.back()}
 >
