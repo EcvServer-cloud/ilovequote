@@ -11,7 +11,12 @@
 			href: `${base}/docs/rh/recibo-nomina`,
 			disabled: false
 		},
-		{ title: 'Constancia laboral', description: 'Próximamente', disabled: true },
+		{
+			title: 'Constancia laboral',
+			description: 'Redacción automática, folio y firma.',
+			href: `${base}/docs/rh/constancia-laboral`,
+			disabled: false
+		},
 		{ title: 'Aguinaldo', description: 'Próximamente', disabled: true },
 		{ title: 'Vacaciones', description: 'Próximamente', disabled: true },
 		{ title: 'Finiquito', description: 'Próximamente', disabled: true },
